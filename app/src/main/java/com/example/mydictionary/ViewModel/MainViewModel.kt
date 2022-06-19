@@ -8,12 +8,7 @@ import com.example.mydictionary.repository.RepositoryImpl
 import com.example.view.MainInteractor
 import io.reactivex.observers.DisposableObserver
 
-class MainViewModel(
-    private val interactor: MainInteractor = MainInteractor(
-        RepositoryImpl(DataSourceRemote()),
-        RepositoryImpl(DataSourceLocal())
-    )
-) : BaseViewModel<AppState>() {
+class MainViewModel(private val interactor: MainInteractor): BaseViewModel<AppState>() {
     private var appState: AppState? = null
 
     override fun getData(word: String, isOnline: Boolean): LiveData<AppState> {

@@ -3,13 +3,14 @@ package com.example.view
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydictionary.R
+import com.example.mydictionary.ViewModel.BaseViewModel
 import com.example.mydictionary.ViewModel.MainViewModel
 import com.example.mydictionary.data.AppState
 import com.example.mydictionary.data.DataModel
 import com.example.mydictionary.databinding.ActivityMainBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<AppState>() {
 
@@ -23,9 +24,7 @@ class MainActivity : BaseActivity<AppState>() {
             }
         }
 
-    override val model: MainViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java)
-    }
+    val viewModel: MainViewModel by viewModel()
 
     private val observer = Observer<AppState> { renderData(it) }
 
@@ -39,7 +38,7 @@ class MainActivity : BaseActivity<AppState>() {
             searchDialogFragment.setOnSearchClickListener(object :
                 SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    model.getData(searchWord, true).observe(this@MainActivity, observer)
+                    viewModel.getData(searchWord, true).observe(this@MainActivity, observer)
                 }
             })
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
@@ -85,7 +84,7 @@ class MainActivity : BaseActivity<AppState>() {
         showViewError()
         binding.errorTextview.text = error ?: getString(R.string.undefined_error)
         binding.reloadButton.setOnClickListener {
-            model.getData("hi", true).observe(this, observer)
+            viewModel.getData("hi", true).observe(this, observer)
         }
     }
 
@@ -111,5 +110,7 @@ class MainActivity : BaseActivity<AppState>() {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
             "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
     }
+
+
 
 }
