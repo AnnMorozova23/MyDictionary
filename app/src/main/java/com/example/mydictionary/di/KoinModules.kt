@@ -10,15 +10,17 @@ import com.example.view.MainInteractor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val NAME_REMOTE:String = "NAME_REMOTE"
-val NAME_LOCAL:String = "NAME_LOCAL"
+val NAME_REMOTE: String = "NAME_REMOTE"
+val NAME_LOCAL: String = "NAME_LOCAL"
 
 val application = module {
 
     single<Repository<List<DataModel>>>(named(NAME_REMOTE)) {
-        RepositoryImpl(RetrofitImplementation()) }
+        RepositoryImpl(RetrofitImplementation())
+    }
     single<Repository<List<DataModel>>>(named(NAME_LOCAL)) {
-        RepositoryImpl(RoomDataBaseImplementation()) }
+        RepositoryImpl(RoomDataBaseImplementation())
+    }
 }
 
 val mainScreen = module {

@@ -4,6 +4,12 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
+private const val STATUS_CODE_ONE = 1
+private const val STATUS_CODE_TWO = 2
+private const val STATUS_CODE_THREE = 3
+private const val STATUS_CODE_FOUR = 4
+private const val STATUS_CODE_FIVE = 5
+
 class BaseInterceptor private constructor():Interceptor {
     private var responseCode: Int = 0
 
@@ -17,11 +23,11 @@ class BaseInterceptor private constructor():Interceptor {
     fun getResponseCode(): ServerResponseStatusCode {
         var statusCode = ServerResponseStatusCode.UNDEFINED_ERROR
         when (responseCode / 100) {
-            1 -> statusCode = ServerResponseStatusCode.INFO
-            2 -> statusCode = ServerResponseStatusCode.SUCCESS
-            3 -> statusCode = ServerResponseStatusCode.REDIRECTION
-            4 -> statusCode = ServerResponseStatusCode.CLIENT_ERROR
-            5 -> statusCode = ServerResponseStatusCode.SERVER_ERROR
+            STATUS_CODE_ONE -> statusCode = ServerResponseStatusCode.INFO
+            STATUS_CODE_TWO -> statusCode = ServerResponseStatusCode.SUCCESS
+            STATUS_CODE_THREE -> statusCode = ServerResponseStatusCode.REDIRECTION
+            STATUS_CODE_FOUR -> statusCode = ServerResponseStatusCode.CLIENT_ERROR
+            STATUS_CODE_FIVE -> statusCode = ServerResponseStatusCode.SERVER_ERROR
         }
         return statusCode
     }

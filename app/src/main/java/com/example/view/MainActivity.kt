@@ -26,19 +26,17 @@ class MainActivity : BaseActivity<AppState>() {
 
     val viewModel: MainViewModel by viewModel()
 
-    private val observer = Observer<AppState> { renderData(it) }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.subscribe().observe(this@MainActivity, { renderData(it) })
         binding.searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
             searchDialogFragment.setOnSearchClickListener(object :
                 SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    viewModel.getData(searchWord, true).observe(this@MainActivity, observer)
+                    viewModel.getData(searchWord, true)
                 }
             })
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
@@ -84,7 +82,7 @@ class MainActivity : BaseActivity<AppState>() {
         showViewError()
         binding.errorTextview.text = error ?: getString(R.string.undefined_error)
         binding.reloadButton.setOnClickListener {
-            viewModel.getData("hi", true).observe(this, observer)
+            viewModel.getData("hi", true)
         }
     }
 
@@ -110,7 +108,6 @@ class MainActivity : BaseActivity<AppState>() {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
             "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
     }
-
 
 
 }

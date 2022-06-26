@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.example.mydictionary.databinding.SearchDialogFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class SearchDialogFragment: BottomSheetDialogFragment() {
+class SearchDialogFragment : BottomSheetDialogFragment() {
 
     private var _binding: SearchDialogFragmentBinding? = null
     private val binding get() = _binding!!
@@ -62,6 +62,7 @@ class SearchDialogFragment: BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         onSearchClickListener = null
+        _binding = null
         super.onDestroyView()
     }
 
